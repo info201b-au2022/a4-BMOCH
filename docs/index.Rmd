@@ -1,45 +1,79 @@
 ---
-title: "Your A4 Report Title (TODO: Revise title)"
-author: "Your Name"
+title: "How does Gender Ratio Change in Incarcerated Populations in the U.S.?"
+author: "Brandon Mochizuki"
 date: '2022-11-01'
 output: html_document
 ---
 
 ```{r echo=FALSE, eval=TRUE, message=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 source("../source/a4-helpers.R")
 source("../source/analysis.R")
 ```
 
-## Abstract 
-[TODO: Include a short abstract (about 50 words)]
-
-# Test (TODO: Remove before submission!!)
-```{r echo=FALSE}
-q1_string <- test_query1()
-num <- 5
-```
-As you know, this is a markdown report. The [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) is **useful!**
-
-* Here's a test of a dynamic variable. Say **"`r q1_string`!!!** 
-* Here's another test. A vector
-of numbers: `r test_query2(num)`.
-
-Recall that _{r echo=TRUE}_ can be used to display the code, 
-which is very useful when developing and debugging a report. Here's an example: 
-
-```{r echo=TRUE}
-num <- 5
-sum <- sum(test_query2(num))
-print(sum)
-```
+## Abstract
+The question that will be addressed is how gender is affecting imprisonment rates. This is important because imprisonment is a life-altering event that can impact the person being imprisoned, their family members, and their community. The prison system in the United States has been a topic of debate due to recent gender disparities and it needs to be reformed for criminal justice without oppression.
 
 ## Introduction 
-[TODO]
+For my report, I chose to observe the rates of different genders that were incarcerated from 1970-2018 in the dataset. Some questions I am answering are:
+What do the gender ratios in incarcerated populations look like?
+Over the years, how have these gender ratios changed (if at all)? 
+    The direct stakeholders affected by research into this dataset are the people who physically read this report. One of the biggest indirect stakeholders is the people who are actually in the dataset since they don’t interact directly with the data, but they have undergone datafication and have become numbers and information inside of the dataset. Before diving deeper into this data, I would like to acknowledge that this dataset goes against some of the values of value sensitive design; I noticed that in the data, there is no acknowledgement of nonbinary people. This goes against the value of inclusivity. This data also likely doesn’t ask for the consent of those who were incarcerated since it uses public data. However, this also goes against the value of privacy since not everyone may want their data to be used. But for the purposes of this report, I will only use the numbers in this dataset.
 
-## Data Summary 
-[TODO]
+## Data Summary
 
-[TODO ... other sections ... See Canvas for details]
+We can see trends in the data by looking at how the average percentage of each gender group that was incarcerated differed. The most telling summarizing points might be looking directly at the population of a gender in jail and comparing that with the population of that gender in a county. The average percentage of the female population that was incarcerated in 2000 was `r avg_female_2000`. The average percentage of the male population that was incarcerated in 2000 was `r avg_male_2000`. 18 years later, in 2018, the average percentage of the female population that was incarcerated was `r avg_female_2018`, whereas the average for the male population was `r avg_male_2018`.
 
-_All the very best with your work!_
+We can also look at more continuous trends by looking at how the percentage of the gender populations that were incarcerated changed over the years. In 1980, the ratio of prisoners (male:female) was `r ratio_1980`. In 2000, the ratio of prisoners (male:female) was `r ratio_2000`. In 2018, the ratio of prisoners (male:female) was `r ratio_2018`). 
 
+## Jail Population Growth
+
+```{r, echo=FALSE, out.width="100%"}
+plot_jail_pop_for_us()
+```
+
+This graph shows the trend for the jail population in the U.S. from 1970 to 2018. This graph answers the question: 
+
+- What trends can be seen in the number of incarcerated people in the U.S. from 1970 to 2018?
+
+From observing this graph, it is possible to see that the population in U.S. prisons remained stable from about 1970 to 1976. From there, the population began to increase at a linear rate. The population continued to increase until about 2007, where the population in jails peaked. Afterwards, the population started to decline slightly, although it remained mostly constant, at a linear rate until 2018.
+
+
+## Jail Population Growth by States
+
+```{r, echo=FALSE, out.width="100%"}
+plot_jail_pop_by_states(c("WA", "ID","OR"))
+```
+The trends in the graph show the increase of U.S. jail populations from 1970-2018 grouped by states in the Pacific Northwest. This graph can be used to answer the question:
+
+- What trends can be seen in the number of incarcerated people in the Pacific Northwest from 1970 to 2018?
+
+The trends in this graph are relatively similar overall to the trends seen in the overall states graph from Section 3 since the populations are increasing in both. However, there are a few differences in specific trends. First, the population seems to be increasing from 1970 to about 1988 at a slight positive slope. From there, the slope increases, and the increase in population gets significantly higher per year from 1988 to about 2000. From there, the population looks to remain mostly constant.
+
+## Jail Population by Gender
+
+```{r, echo=FALSE, out.width="100%"}
+plot_year_gender_jail_pop()
+```
+
+The trends in this graph answer questions about how gender in incarcerated populations are split, and how these gender ratios have changed over the years. Specifically, they answer the following questions:
+
+- What do incarcerated populations look like when split by gender?
+
+- Over the years, how have these gender ratios in incarcerated populations changed (if at all)? 
+
+This graph shows that the gender ratio of female to male people in jails have generally increased. Looking at the slopes of the trends, it is possible to see that over the years, an increasingly higher number of women have been incarcerated ratio-wise compared to the ratio of incarceration rate for men. The population for men peaked in the late 2000s and started to decrease, while the population for women plateaued in the late 2000s but remain around the same level.
+
+## Jail Gender Ratio by County
+
+```{r, echo=FALSE, out.width="100%"}
+map_year_gender_jail_ratio()
+```
+
+The trends in this choropleth answer questions about how gender in incarcerated populations are split in various U.S. counties. Specifically, they answer the following questions:
+
+- How do the gender ratios in incarcerated populations look like in specific U.S. counties?
+
+- Over the years, how have these gender ratios in incarcerated populations changed (if at all)? 
+
+This visualization shows that the percentage of women who are incarcerated is steadily increasing over time across all counties. The blue gets significantly fainter and some red spots show up when swapping between 1970 and 2018. These red spots are showing up evenly though, so this trend isn't just specific to a specific region but is true for the entirety of the United States.
